@@ -64,9 +64,9 @@ public class LogAnalyzer
     }
     
     /**
-     * Return the index of the busiest hour in the hourCounts array. 
+     * Return the value of the busiest hour in the hourCounts array. 
      * Exercise 7.15
-     * @return The index of the busiest hour.
+     * @return The value of the busiest hour.
      */
     public int busiestHour()
     {
@@ -77,11 +77,11 @@ public class LogAnalyzer
             busiest = index;
             } 
         }
-        return busiest;
+        return hourCounts[busiest];
     }
     
     /**
-     * Return the index of the quietest hour. 
+     * Return the value of the quietest hour. 
      */
     public int quietestHour()
     {
@@ -92,7 +92,32 @@ public class LogAnalyzer
             quietest = index;
             } 
         }
-        return quietest;
+        return hourCounts[quietest];
+    }
+    
+    /**
+     * Return the value of the busiest two-hour period.
+     */
+    public int busiestTwoHour()
+    {
+        int busiest = 0;
+        int twoHrTotal;
+        int previousTotal = 0;
+        int nextIndex;
+        for (int index = 0; index < hourCounts.length; index++)
+        {   
+            if(index < 23){
+                nextIndex = index + 1;}
+            else{
+                nextIndex = 0;
+            }
+            twoHrTotal= hourCounts[index] + hourCounts[nextIndex];
+            if (twoHrTotal > previousTotal){
+                busiest = index;
+            }
+            previousTotal = twoHrTotal;
+        }
+        return busiest;
     }
     
     /**
