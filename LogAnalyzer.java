@@ -64,6 +64,23 @@ public class LogAnalyzer
     }
     
     /**
+     * Return the index of the busiest hour in the hourCounts array. 
+     * Exercise 7.15
+     * @return The index of the busiest hour.
+     */
+    public int busiestHour()
+    {
+        int busiest = 0;
+        for (int index = 0; index < hourCounts.length; index++)
+        {
+            if (hourCounts[index] > hourCounts[busiest]){
+            busiest = index;
+            } 
+        }
+        return busiest;
+    }
+    
+    /**
      * Print the hourly counts.
      * These should have been set with a prior
      * call to analyzeHourlyData.
