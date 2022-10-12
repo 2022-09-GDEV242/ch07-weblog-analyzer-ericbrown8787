@@ -1,8 +1,8 @@
 /**
  * Read web server data and analyse hourly access patterns.
  * 
- * @author David J. Barnes and Michael Kölling.
- * @version    2016.02.29
+ * @author Eric Brown
+ * @version    10-12-2022
  */
 public class LogAnalyzer
 {
@@ -21,6 +21,20 @@ public class LogAnalyzer
         hourCounts = new int[24];
         // Create the reader to obtain the data.
         reader = new LogfileReader("demo.log");
+    }
+    
+    /**
+     * Create an object to analyze hourly web accesses from a specific file.
+     * Exercise 7.12
+     * @param file The file to analyze. 
+     */
+    public LogAnalyzer(String file)
+    {
+        // Create the array object to hold the hourly
+        // access counts.
+        hourCounts = new int[24];
+        // Create the reader to obtain the data.
+        reader = new LogfileReader(file);
     }
 
     /**
