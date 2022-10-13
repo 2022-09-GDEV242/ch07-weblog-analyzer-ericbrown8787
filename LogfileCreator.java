@@ -51,10 +51,10 @@ public class LogfileCreator
         return success;
     }
     
-        /**
-     * Create a file of random log entries.
+    /**
+     * Create a file of random log entries spanning five years.
      * @param filename The file to write.
-     * @param numEntries How many entries.
+     * @param numEntries How many entries per year.
      * @return true if successful, false otherwise.
      */
     public boolean createFiveYearFile(String filename, int numEntries)
@@ -67,11 +67,10 @@ public class LogfileCreator
                     for(int j = 0; j < numEntries; j++) {
                         entries[k] = createEntry(2015 + i);
                         k++;
-                        System.out.println(k);
                     }
                 }
                 Arrays.sort(entries);
-                for(int i = 0; i < numEntries; i++) {
+                for(int i = 0; i < numEntries*5; i++) {
                     writer.write(entries[i].toString());
                     writer.write('\n');
                 }
