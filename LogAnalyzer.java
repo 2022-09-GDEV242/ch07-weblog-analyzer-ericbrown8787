@@ -5,7 +5,10 @@
  * @version    10-12-2022
  */
 public class LogAnalyzer
-{
+{   
+    private int[] yearCounts;
+    private int[] monthCounts;
+    private int[] dayCounts;
     // Where to calculate the hourly access counts.
     private int[] hourCounts;
     // Use a LogfileReader to access the data.
@@ -18,6 +21,8 @@ public class LogAnalyzer
     { 
         // Create the array object to hold the hourly
         // access counts.
+        monthCounts = new int[12];
+        dayCounts = new int[28];
         hourCounts = new int[24];
         // Create the reader to obtain the data.
         reader = new LogfileReader("demo.log");
@@ -32,6 +37,8 @@ public class LogAnalyzer
     {
         // Create the array object to hold the hourly
         // access counts.
+        monthCounts = new int[12];
+        dayCounts = new int[28];
         hourCounts = new int[24];
         // Create the reader to obtain the data.
         reader = new LogfileReader(file);
@@ -47,6 +54,33 @@ public class LogAnalyzer
             int hour = entry.getHour();
             hourCounts[hour]++;
         }
+        reader.reset();
+    }
+    
+    /**
+     * Analyze the daily access data from the log file.
+     */
+    public void analyzeDailyData()
+    {   
+        while(reader.hasNext()) {
+            LogEntry entry = reader.next();
+            int day = entry.getDay() - 1;
+            dayCounts[day]++;
+        }
+        reader.reset();
+    }
+    
+    /**
+     * Analyze the monthly access data from the log file.
+     */
+    public void analyzeMonthlyData()
+    {
+        while(reader.hasNext()) {
+            LogEntry entry = reader.next();
+            int month = entry.getMonth() - 1;
+            monthCounts[month]++;
+        }
+        reader.reset();
     }
     
     /**
@@ -77,11 +111,12 @@ public class LogAnalyzer
             busiest = index;
             } 
         }
-        return hourCounts[busiest];
+        return busiest;
     }
     
     /**
      * Return the index of the quietest hour.
+     * Exercise 7.16
      * @return The index of the quietest hour.
      */
     public int quietestHour()
@@ -93,7 +128,41 @@ public class LogAnalyzer
             quietest = index;
             } 
         }
-        return hourCounts[quietest];
+        return quietest;
+    }
+    
+    /**
+     * Return the index of the busiest hour. 
+     * Exercise 7.19
+     * @return The index of the busiest hour.
+     */
+    public int busiestDay()
+    {
+        int busiest = 0;
+        for (int index = 0; index < dayCounts.length; index++)
+        {
+            if (dayCounts[index] > dayCounts[busiest]){
+            busiest = index;
+            } 
+        }
+        return busiest;
+    }
+    
+    /**
+     * Return the index of the quietest day.
+     * Exercise 7.19
+     * @return The index of the quietest day.
+     */
+    public int quietestDay()
+    {
+        int quietest = 0;
+        for (int index = 0; index < dayCounts.length; index++)
+        {
+            if (dayCounts[index] < dayCounts[quietest]){
+            quietest = index;
+            } 
+        }
+        return quietest;
     }
     
     /**

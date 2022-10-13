@@ -51,6 +51,41 @@ public class LogfileCreator
         return success;
     }
     
+        /**
+     * Create a file of random log entries.
+     * @param filename The file to write.
+     * @param numEntries How many entries.
+     * @return true if successful, false otherwise.
+     */
+    public boolean createFiveYearFile(String filename, int numEntries)
+    {
+        boolean success = false;
+        if(numEntries > 0) {
+            try (FileWriter writer = new FileWriter(filename)) {
+                LogEntry[] entries = new LogEntry[numEntries*5];
+                for (int i = 0, k = 0; i < 5; i++){
+                    for(int j = 0; j < numEntries; j++) {
+                        entries[k] = createEntry(2015 + i);
+                        k++;
+                        System.out.println(k);
+                    }
+                }
+                Arrays.sort(entries);
+                for(int i = 0; i < numEntries; i++) {
+                    writer.write(entries[i].toString());
+                    writer.write('\n');
+                }
+                
+                success = true;
+            }
+            catch(IOException e) {
+                System.err.println("There was a problem writing to " + filename);
+            }
+                
+        }
+        return success;
+    }
+    
     /**
      * Create a single (random) entry for a log file.
      * @return A log entry containing random data.
@@ -58,6 +93,21 @@ public class LogfileCreator
     public LogEntry createEntry()
     {
         int year = 2016;
+        int month = 1 + rand.nextInt(12);
+        // Avoid the complexities of days-per-month.
+        int day = 1 + rand.nextInt(28);
+        int hour = rand.nextInt(24);
+        int minute = rand.nextInt(60);
+        return new LogEntry(year, month, day, hour, minute);
+    }
+    
+    /**
+     * Create a single (random) entry for a log file with a specific year value.
+     * @param The year value.
+     * @return A log entry containing random data.
+     */
+    public LogEntry createEntry(int year)
+    {
         int month = 1 + rand.nextInt(12);
         // Avoid the complexities of days-per-month.
         int day = 1 + rand.nextInt(28);
