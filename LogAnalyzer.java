@@ -25,7 +25,7 @@ public class LogAnalyzer
         dayCounts = new int[28];
         hourCounts = new int[24];
         // Create the reader to obtain the data.
-        reader = new LogfileReader("demo.log");
+        reader = new LogfileReader();
     }
     
     /**
@@ -98,6 +98,35 @@ public class LogAnalyzer
     }
     
     /**
+     * Return the number of accesses for each month recorded in the log file.
+     * Exercise 7.19
+     * @return The number of accesses recorded in the log file for each month
+     */
+    public int[] totalAccessesPerMonth()
+    {   
+        return monthCounts;
+    }
+    
+    /**
+     * Return the average number of accesses per month.
+     * Exercise 7.19
+     * @return The average number of accesses recorded in the log per month.
+     */
+    public int averageAccessesPerMonth()
+    {
+        int total = 0;
+        int average;
+        
+        for (int i = 0; i < monthCounts.length; i++){
+            total += monthCounts[i];
+        }
+        
+        average = total / 12;
+        
+        return average;
+    }
+    
+    /**
      * Return the index of the busiest hour. 
      * Exercise 7.15
      * @return The index of the busiest hour.
@@ -132,9 +161,9 @@ public class LogAnalyzer
     }
     
     /**
-     * Return the index of the busiest hour. 
+     * Return the index of the busiest day. 
      * Exercise 7.19
-     * @return The index of the busiest hour.
+     * @return The index of the busiest day.
      */
     public int busiestDay()
     {
@@ -159,6 +188,39 @@ public class LogAnalyzer
         for (int index = 0; index < dayCounts.length; index++)
         {
             if (dayCounts[index] < dayCounts[quietest]){
+            quietest = index;
+            } 
+        }
+        return quietest;
+    }
+    /**
+     * Return the index of the busiest month. 
+     * Exercise 7.19
+     * @return The index of the busiest month.
+     */
+    public int busiestMonth()
+    {
+        int busiest = 0;
+        for (int index = 0; index < monthCounts.length; index++)
+        {
+            if (monthCounts[index] > monthCounts[busiest]){
+            busiest = index;
+            } 
+        }
+        return busiest;
+    }
+    
+    /**
+     * Return the index of the quietest month.
+     * Exercise 7.19
+     * @return The index of the quietest month.
+     */
+    public int quietestMonth()
+    {
+        int quietest = 0;
+        for (int index = 0; index < monthCounts.length; index++)
+        {
+            if (monthCounts[index] < monthCounts[quietest]){
             quietest = index;
             } 
         }
